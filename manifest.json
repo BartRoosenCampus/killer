@@ -1,0 +1,21 @@
+{
+  "name": "Killer",
+  "short_name": "Killer",
+  "description": "A darts game",
+  "start_url": "https://bartroosencampus.github.io/darts-killer/index.html",
+  "display": "standalone",
+  "background_color": "#1fd51f",
+  "theme_color": "#000000",
+  "icons": [
+    {
+      "src": "https://bartroosencampus.github.io/darts-killer/img/killer.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "https://bartroosencampus.github.io/darts-killer/img/512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
