@@ -7,13 +7,13 @@
   "theme_color": "#2E7D32",
   "icons": [
     {
-      "src": "/darts-killer/img/logo.png",
+      "src": "img/logo.png",
       "type": "image/png",
       "sizes": "192x192",
       "purpose": "any maskable"
     },
     {
-      "src": "/darts-killer/img/logo.png",
+      "src": "img/logo.png",
       "type": "image/png",
       "sizes": "512x512",
       "purpose": "any maskable"
