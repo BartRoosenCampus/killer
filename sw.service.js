@@ -1,4 +1,4 @@
-const CACHE_NAME = 'killer-v1';
+const CACHE_NAME = 'killer-v2';
 const assets = [
     './index.html',
     './css/style.css',
