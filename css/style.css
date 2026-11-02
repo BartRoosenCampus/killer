@@ -1,0 +1,514 @@
+:root {
+    --bg-color: #121212;
+    --card-bg: #1e1e1e;
+    --primary: #2e7d32;
+    --primary-hover: #388e3c;
+    --success: #2e7d32;
+    --warning: #f57c00;
+    --danger: #c62828;
+    --text-color: #ffffff;
+    --text-muted: #b0b0b0;
+    --border-color: #333333;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* Donkere scrollbar styling */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-color);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #333333;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #444444;
+}
+
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #333333 var(--bg-color);
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.screen {
+    display: none;
+    width: 100%;
+    max-width: 480px;
+    height: 100vh;
+    max-height: 900px;
+    background-color: var(--bg-color);
+    flex-direction: column;
+    padding: 20px;
+}
+
+.screen.active {
+    display: flex;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    flex: 1;
+    text-align: center;
+    gap: 15px;
+    overflow-y: auto;
+}
+
+h1, h2, h3 {
+    margin-bottom: 5px;
+}
+
+.btn {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    color: white;
+    transition: background 0.2s;
+}
+
+.btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.btn.primary { background-color: #1976d2; }
+.btn.primary:hover { background-color: #115293; }
+.btn.success { background-color: var(--success); }
+.btn.success:hover { background-color: #388e3c; }
+.btn.warning { background-color: var(--warning); }
+.btn.danger { background-color: var(--danger); }
+.btn.secondary { background-color: #616161; }
+
+.full-width {
+    width: 100%;
+}
+
+/* Scherm 1: Namen invoeren */
+.name-add-section {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+}
+
+.name-add-section input {
+    flex: 1;
+    padding: 12px;
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+    background: var(--card-bg);
+    color: white;
+    font-size: 16px;
+}
+
+.player-list-header {
+    width: 100%;
+    text-align: left;
+    font-size: 14px;
+    color: var(--text-muted);
+}
+
+.player-list-box {
+    width: 100%;
+    max-height: 300px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding-right: 4px;
+}
+
+.player-name-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--card-bg);
+    padding: 10px 15px;
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+}
+
+.player-name-item span {
+    font-weight: 500;
+}
+
+.player-name-item button {
+    background: var(--danger);
+    border: none;
+    color: white;
+    padding: 6px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+/* Scherm 2: Spel */
+.game-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.step-info {
+    font-size: 18px;
+    font-weight: bold;
+    color: #81c784;
+}
+
+.actions-top {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-icon {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    color: white;
+    padding: 6px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.game-main {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding-top: 15px;
+    gap: 15px;
+    overflow: hidden;
+}
+
+.left-pane {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: 12px;
+    overflow: hidden;
+}
+
+.players-grid {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-right: 4px;
+}
+
+/* Speler Tile */
+.player-tile {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 12px 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.player-tile.active-turn {
+    border-color: #81c784;
+    background: #1a271a;
+}
+
+.player-tile.winner-tile {
+    border-color: #81c784;
+    background: #1b381b;
+    animation: winPulse 1.2s infinite alternate;
+}
+
+@keyframes winPulse {
+    0% { transform: scale(1); box-shadow: 0 0 5px rgba(46, 125, 50, 0.4); }
+    100% { transform: scale(1.02); box-shadow: 0 0 20px rgba(46, 125, 50, 0.8); }
+}
+
+.player-tile.eliminated {
+    opacity: 0.4;
+    text-decoration: line-through;
+}
+
+.tile-header {
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.tile-info-right {
+    font-size: 14px;
+    color: var(--text-muted);
+}
+
+.dots-container {
+    display: flex;
+    gap: 6px;
+}
+
+.dot {
+    flex: 1;
+    height: 12px;
+    border-radius: 3px;
+    background: #333;
+    transition: background 0.3s;
+}
+
+.dot.green-dot {
+    background: #2e7d32;
+}
+
+.dot.red-dot {
+    background: #c62828;
+}
+
+.turn-indicator {
+    font-size: 15px;
+    color: var(--text-muted);
+    text-align: center;
+}
+
+.game-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* INVOER PANEEL */
+.score-input-panel {
+    display: none;
+    flex-direction: column;
+    gap: 12px;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 20px;
+}
+
+.score-input-panel.modal-active {
+    display: flex;
+    position: fixed;
+    z-index: 200;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--bg-color);
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 10px;
+}
+
+.panel-header h2 {
+    font-size: 16px;
+    color: #81c784;
+}
+
+.close-fullscreen-btn {
+    background: var(--danger);
+    border: none;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.throws-preview-container {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.throw-tile {
+    flex: 1;
+    background: #2a2a2a;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: 8px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 16px;
+    color: #81c784;
+    min-height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.turn-counter-label {
+    font-size: 13px;
+    color: var(--text-muted);
+    text-align: center;
+}
+
+.multiplier-selector {
+    display: flex;
+    gap: 8px;
+}
+
+.mult-btn {
+    flex: 1;
+    padding: 10px;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    color: white;
+    font-weight: bold;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.mult-btn.active {
+    background: #1976d2;
+    border-color: #64b5f6;
+}
+
+.number-keypad {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+}
+
+.num-btn {
+    padding: 12px 0;
+    font-size: 16px;
+    font-weight: bold;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.num-btn:active {
+    background: #333;
+}
+
+.num-btn.special-btn {
+    background: #2d3748;
+    color: #e2e8f0;
+}
+
+/* RESPONSIVE LAY-OUT VOOR GROTE SCHERMEN */
+@media (min-width: 768px) {
+    body {
+        align-items: stretch;
+    }
+
+    .screen {
+        max-width: 1100px;
+        max-height: 100vh;
+        height: 100vh;
+        margin: 0 auto;
+    }
+
+    .game-main {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        overflow: visible;
+    }
+
+    .left-pane {
+        overflow: hidden;
+    }
+
+    .players-grid {
+        max-height: calc(100vh - 160px);
+    }
+
+    .mobile-only {
+        display: none !important;
+    }
+
+    .score-input-panel {
+        display: flex !important;
+        position: static !important;
+        height: fit-content;
+    }
+}
+
+/* Standaard Modals (Reset) */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 300;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.8);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: var(--card-bg);
+    padding: 20px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 380px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    border: 1px solid var(--border-color);
+}
+
+.confirm-box {
+    text-align: center;
+}
+
+.confirm-box p {
+    color: var(--text-muted);
+    font-size: 15px;
+}
+
+.modal-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.close-btn {
+    align-self: flex-end;
+    font-size: 24px;
+    cursor: pointer;
+    color: var(--text-muted);
+}

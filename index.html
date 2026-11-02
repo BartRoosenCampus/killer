@@ -1,27 +1,115 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="nl">
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8">
-    <link rel="icon" href="darts-killer/favicon.ico" type="image/x-icon">
-    <title>Killer</title>
-    <script type="module" src="js/main.js"></script>
-    <link rel="stylesheet" href="css/main.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dart Killer Spel</title>
+    <link rel="stylesheet" href="css/style.css">
     <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#2E7D32">
+    <link rel="icon" type="image/png" href="img/logo.png">
+    <link rel="apple-touch-icon" href="img/logo.png">
 </head>
 <body>
-<div id="forms">
-    <div id="addPlayersForm">
-        <input type="text" id="name" placeholder="Players name" />
-        <button type="button" id="addPlayer">Add player</button>
-        <button type="button" id="deleteAllPlayers">Clear list</button>
+
+<!-- SCHERM 1: Namen invoeren (max 10 spelers) -->
+<section id="screen-names" class="screen active">
+    <div class="container">
+        <h1>Dart Killer</h1>
+        <p>Geef de namen op (min. 2, max. 10 spelers)</p>
+
+        <div class="name-add-section">
+            <input type="text" id="new-player-input" placeholder="Naam speler..." maxlength="15" onkeydown="if(event.key==='Enter') App.addPlayer()">
+            <button class="btn primary" onclick="App.addPlayer()">Voeg toe</button>
+        </div>
+
+        <div class="player-list-header">
+            <span>Ingevoerde spelers: <strong id="player-count-label">0</strong> / 10</span>
+        </div>
+
+        <div id="player-list-container" class="player-list-box">
+            <!-- Dynamische lijst van ingevoerde spelers -->
+        </div>
+
+        <button class="btn success full-width" id="start-game-btn" onclick="App.startGame()" disabled>Start Spel (min. 2)</button>
     </div>
-    <div id="exitForm">
-        <button type="button" id="deleteGame">Exit game</button>
+</section>
+
+<!-- SCHERM 2: Het spel zelf -->
+<section id="screen-game" class="screen">
+    <header class="game-header">
+        <div class="step-info" id="game-status-title">Killer Spel</div>
+        <div class="actions-top">
+            <button class="btn-icon danger" onclick="App.confirmResetGame()" title="Reset">🔄 Reset</button>
+        </div>
+    </header>
+
+    <main class="game-main">
+        <!-- Linkergedeelte: Spelersoverzicht & Beurt info -->
+        <div class="left-pane">
+            <div class="turn-indicator" id="turn-indicator-box">
+                Aan de beurt: <strong id="active-player-name">-</strong>
+            </div>
+
+            <div id="players-grid" class="players-grid">
+                <!-- Dynamisch ingevuld per speler -->
+            </div>
+
+            <!-- Actieknop om score in te voeren (Alleen zichtbaar op mobiel) -->
+            <div class="game-controls mobile-only" id="mobile-action-controls">
+                <button class="btn success full-width" onclick="App.openScoreModal()">🎯 Gegooid invoeren (3 pijlen)</button>
+            </div>
+
+            <!-- Nieuw spel knop die verschijnt bij winst -->
+            <div class="game-controls" id="win-action-controls" style="display: none;">
+                <button class="btn primary full-width" onclick="App.executeResetGame()">🎮 Nieuw Spel Starten</button>
+            </div>
+        </div>
+
+        <!-- Rechtergedeelte: Invoerklavier & worpen (Vast op groot scherm, Modal op mobiel) -->
+        <div id="score-input-panel" class="score-input-panel">
+            <div class="panel-header mobile-only">
+                <h2 id="modal-active-player-title">Beurt: Speler</h2>
+                <button class="close-fullscreen-btn" onclick="App.closeScoreModal()">&times; Sluiten</button>
+            </div>
+
+            <div class="throws-preview-container">
+                <div class="throw-tile" id="throw-0">-</div>
+                <div class="throw-tile" id="throw-1">-</div>
+                <div class="throw-tile" id="throw-2">-</div>
+            </div>
+            <div class="turn-counter-label" id="dart-turn-counter">Pijl 1 van 3</div>
+
+            <div class="multiplier-selector">
+                <button class="mult-btn active" id="btn-single" onclick="App.setMultiplier(1)">Single (1x)</button>
+                <button class="mult-btn" id="btn-double" onclick="App.setMultiplier(2)">Dubbel (2x)</button>
+                <button class="mult-btn" id="btn-triple" onclick="App.setMultiplier(3)">Trippel (3x)</button>
+            </div>
+
+            <div class="number-keypad" id="number-keypad">
+                <!-- Wordt gegenereerd via JS -->
+            </div>
+        </div>
+    </main>
+</section>
+
+<!-- MODAL: Bevestiging Reset Spel -->
+<div id="reset-modal" class="modal">
+    <div class="modal-content confirm-box">
+        <h3>Spel resetten</h3>
+        <p>Weet je zeker dat je het huidige spel wilt afbreken?</p>
+        <div class="modal-buttons">
+            <button class="btn secondary" onclick="App.closeResetModal()">Neen</button>
+            <button class="btn danger" onclick="App.executeResetGame()">Ja, reset</button>
+        </div>
     </div>
 </div>
-<div id="gameDashboard"></div>
-<div id="players"></div>
-<div id="targets"></div>
+
+<script src="js/app.js"></script>
+<script>
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('sw.service.js');
+    }
+</script>
 </body>
 </html>
